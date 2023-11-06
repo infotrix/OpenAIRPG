@@ -13,7 +13,7 @@ Embark on a text-based RPG adventure where the GPT-4 or GPT-3.5-turbo model from
 
 ## Latest Updates
 
-### Version 0.5 (Date: YYYY-MM-DD)
+### Version 0.5 (Date: 2023-11-06)
 
 - Introduced character customization options at the beginning of the game.
 - Added functionality for the player to select the AI model at startup.
