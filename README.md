@@ -26,3 +26,12 @@ Next, install the `openai` Python package if you haven't already:
 
 ```bash
 pip install openai
+```
+
+## TODO
+
+- GPT 3.5 Turbo version
+- Web accessible frontend
+- LangChain integration for agent companions and NPCs
+- whisper integration for voice input
+- Dall-e for scene, NPC, and monster generation

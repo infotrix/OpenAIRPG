@@ -31,10 +31,10 @@ system_message = {
 }
 
 
-def chat_with_gpt4_dungeon_master(user_input, game_history):
+def chat_with_gpt4_dungeon_master(user_input, game_history, model):
     try:
         response = openai.ChatCompletion.create(
-            model="gpt-4",  # Ensure this is the correct model name.
+            model=model,  # Dynamically selected model
             messages=game_history + [{"role": "user", "content": user_input}],
         )
         return response.choices[0].message["content"].strip()
@@ -43,8 +43,56 @@ def chat_with_gpt4_dungeon_master(user_input, game_history):
         return None
 
 
+# Possible races and classes from AD&D
+races = ["Human", "Elf", "Dwarf", "Halfling", "Gnome", "Half-Elf", "Half-Orc"]
+classes = [
+    "Fighter",
+    "Wizard",
+    "Cleric",
+    "Rogue",
+    "Paladin",
+    "Ranger",
+    "Druid",
+    "Monk",
+    "Bard",
+]
+
+
+def get_character_creation_input(prompt, choices):
+    print(prompt)
+    for idx, choice in enumerate(choices, 1):
+        print(f"{idx}: {choice}")
+    while True:
+        selection = input("Choose an option: ")
+        if selection.isdigit() and 1 <= int(selection) <= len(choices):
+            return choices[int(selection) - 1]
+        print("Invalid choice, please try again.")
+
+
 def dnd_game_loop():
-    print("Welcome to the GPT-4 Dungeons & Dragons Adventure!")
+    print("Welcome to the GPT Dungeons & Dragons Adventure!")
+
+    # AI model selection
+    print("Choose your AI Dungeon Master:")
+    print("1: GPT-4")
+    print("2: GPT-3.5-turbo")
+    model_choice = input("Select an option (1 or 2): ")
+    model = "gpt-4" if model_choice != "2" else "gpt-3.5-turbo"
+
+    # Character creation
+    print("\n--- Character Creation ---\n")
+    character_name = input("What is your character's name? ")
+
+    character_race = get_character_creation_input(
+        "Choose your character's race:", races
+    )
+    character_class = get_character_creation_input(
+        "Choose your character's class:", classes
+    )
+
+    print(
+        f"\nWelcome, {character_name} the {character_race} {character_class}! Your adventure awaits!\n"
+    )
     print("Type 'quit' to exit.\n")
 
     # List of starting scenes
@@ -59,6 +107,7 @@ def dnd_game_loop():
     starting_scene = random.choice(starting_scenes)
     game_history = [system_message, {"role": "assistant", "content": starting_scene}]
 
+    # Ensure that the selected model is passed to the chat function
     while True:
         print_colored("Dungeon Master: " + game_history[-1]["content"], DM_COLOR)
 
@@ -67,7 +116,9 @@ def dnd_game_loop():
             print("Farewell, adventurer!")
             break
 
-        dm_response = chat_with_gpt4_dungeon_master(player_input, game_history)
+        dm_response = chat_with_gpt4_dungeon_master(
+            player_input, game_history, model
+        )  # Pass the selected model here
         if dm_response:
             print_colored("Dungeon Master: " + dm_response, DM_COLOR)
             game_history.append({"role": "user", "content": player_input})
@@ -78,10 +129,6 @@ def dnd_game_loop():
         # Eleven labs reading (will max out quickly on free tier)
         # audio = elevenlabs.generate(game_history[-1])
         # elevenlabs.play(audio)
-
-
-if __name__ == "__main__":
-    dnd_game_loop()
 
 
 if __name__ == "__main__":
