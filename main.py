@@ -1,3 +1,14 @@
+# Version 1.0.0
+# Author: Ken Newton
+# Date: 2023-11-06
+#
+# Initial release of the GPT-Driven Dungeons & Dragons Text Adventure.
+# Features:
+# - AI-driven Dungeon Master.
+# - Character customization with name, race, and class.
+# - Randomized starting scenarios.
+# - ANSI color-coded text.
+# - AI model selection at startup.
 import os
 import openai
 import random

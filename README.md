@@ -1,37 +1,95 @@
-# GPT-4 Dungeons & Dragons Text Adventure
+# GPT-Driven Dungeons & Dragons Text Adventure
 
-## Description
-
-Embark on an epic adventure in a world crafted by the advanced AI of GPT-4, acting as your Dungeon Master. This Dungeons & Dragons-inspired text adventure game brings the classic RPG experience to your terminal, with dynamic storytelling, character interactions, and combat encounters—all guided by the AI.
-
-As a player, you will navigate through a randomly generated world, engage in dialogue, battle monsters, and discover treasures. The AI Dungeon Master will keep track of your stats, inventory, and the unfolding narrative, reacting to your commands and choices to weave a unique story each time you play.
+Embark on a text-based RPG adventure where the GPT-4 or GPT-3.5-turbo model from OpenAI takes the role of the Dungeon Master. This command-line experience fuses classic AD&D rules with modern AI capabilities to create a unique and dynamic storytelling adventure.
 
 ## Features
 
-- **Randomized Start:** Each game begins with a unique starting scene, setting the stage for a one-of-a-kind adventure.
-- **Color-Coded Dialogue:** Enjoy an immersive experience with color-coded text—Dungeon Master's messages are in green, and player commands are in yellow.
-- **AD&D Rules:** The game follows Advanced Dungeons & Dragons mechanics, utilizing a simplified version for a smooth text-based experience.
-- **Item Interactions:** Discover and interact with items that can be used or equipped, influencing the adventure.
+- Engaging text-based RPG gameplay.
+- AI-driven Dungeon Master for dynamic storytelling.
+- Character customization with name, race, and class choices.
+- Randomized starting scenarios for varied gameplay.
+- ANSI color-coded text for immersive player/DM interactions.
+- Player choice of AI model at game start for tailored experiences.
+
+## Latest Updates
+
+### Version 0.5 (Date: YYYY-MM-DD)
+
+- Introduced character customization options at the beginning of the game.
+- Added functionality for the player to select the AI model at startup.
+- Implemented ANSI color codes for Dungeon Master and player text.
+- Created a randomized starting scene feature to enhance gameplay variety.
+- Various bug fixes and performance improvements.
+
+---
 
 ## Prerequisites
 
-- Python 3.6 or higher
-- An OpenAI API key with access to GPT-4
+- Python 3.6 or later.
+- OpenAI API key.
 
 ## Installation
 
-Before running the game, ensure you have Python installed on your system. If not, download and install the latest version of Python from [python.org](https://www.python.org/downloads/).
-
-Next, install the `openai` Python package if you haven't already:
+Clone the repository:
 
 ```bash
-pip install openai
+git clone https://github.com/yourusername/your-repository-name.git
+cd your-repository-name
 ```
 
-## TODO
+Install the dependencies:
 
-- GPT 3.5 Turbo version
-- Web accessible frontend
-- LangChain integration for agent companions and NPCs
-- whisper integration for voice input
-- Dall-e for scene, NPC, and monster generation
+```bash
+pip install -r requirements.txt
+```
+
+Configure your OpenAI API key (replace `your_api_key` with your actual key):
+
+```bash
+export OPENAI_API_KEY='your_api_key'
+```
+
+## Usage
+
+Run the game:
+
+```bash
+python main.py
+```
+
+Follow the prompts to select the AI model, create your character, and begin your journey!
+
+---
+
+## Gameplay
+
+- Type commands and interact with the world as you would in traditional text-based RPGs.
+- The AI Dungeon Master will guide you through the adventure with descriptions, NPC interactions, and the outcomes of your actions.
+- Use 'quit' to safely exit the game.
+
+## Contributing
+
+Contributions are welcome! Feel free to fork the repository, make changes, and submit pull requests.
+
+## Acknowledgements
+
+- OpenAI for providing the API that powers this game's core functionality.
+- The AD&D community for inspiring the gameplay mechanics.
+
+Enjoy your quest, adventurer!
+
+## License
+
+---
+
+MIT License
+
+Copyright (c) 2023 Ken Newton
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Enjoy your quest, adventurer!
