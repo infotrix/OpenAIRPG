@@ -1,3 +1,5 @@
+# basic free elevenlabs configuration for testing
+
 import elevenlabs
 
 audio = elevenlabs.generate(
