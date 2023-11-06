@@ -21,6 +21,15 @@ Embark on a text-based RPG adventure where the GPT-4 or GPT-3.5-turbo model from
 - Created a randomized starting scene feature to enhance gameplay variety.
 - Various bug fixes and performance improvements.
 
+## TODO
+
+- **Web Accessible Frontend**: Develop a web-based interface to allow easy access from any browser.
+- **Database Integration**: Implement a database system to persistently store player stats, history, adventure logs, and the current world state.
+- **LangChain Integration**: Incorporate LangChain to enhance AI interactions, enabling more complex companion and NPC behaviors.
+- **Whisper Integration**: Utilize OpenAI's Whisper model for accurate voice recognition, allowing voice commands and dictation as input.
+- **DALL-E Integration**: Integrate with DALL-E to dynamically generate images of scenes, NPCs, and monsters to visually accompany the text-based adventure.
+
+
 ---
 
 ## Prerequisites
