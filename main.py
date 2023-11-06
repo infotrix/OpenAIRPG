@@ -1,146 +1,72 @@
-# Version 1.0.0
-# Author: Ken Newton
-# Date: 2023-11-06
-#
-# Initial release of the GPT-Driven Dungeons & Dragons Text Adventure.
-# Features:
-# - AI-driven Dungeon Master.
-# - Character customization with name, race, and class.
-# - Randomized starting scenarios.
-# - ANSI color-coded text.
-# - AI model selection at startup.
 import os
-import openai
 import random
+import openai
+from game_data import starting_scenes
+from character import Character
+from dungeon_master import DungeonMaster
+from utils import print_colored, DM_COLOR, PLAYER_COLOR, RESET_COLOR
 
-# import elebvenlabs
-# import elevenlabs
-
+# Set up the OpenAI key
 openai.api_key = os.getenv("OPENAI_API_KEY")
-# ANSI escape codes for colors
-DM_COLOR = "\033[32m"  # Blue color for the Dungeon Master
-PLAYER_COLOR = "\033[33m"  # Green color for the player
-RESET_COLOR = "\033[0m"  # Reset to default terminal color
 
 
-def print_colored(text, color):
-    print(color + text + RESET_COLOR)
-
-
-system_message = {
-    "role": "system",
-    "content": (
-        "You are a knowledgeable and fair Dungeon Master in a game of Advanced Dungeons & Dragons. "
-        "You are familiar with all the rules, which you enforce consistently, but you also value the fun "
-        "and creativity of the players. Provide detailed descriptions, answer the player’s actions with "
-        "narrative outcomes, manage combat encounters, and facilitate dialogue with characters in the world. "
-        "You can create and describe new characters, settings, and items on the fly. Keep track of the player's "
-        "stats and inventory. When dice rolls are necessary, you'll simulate the outcome. Do not make real-world references "
-        "and maintain the fantasy setting. Your goal is to create an engaging and dynamic story while ensuring a "
-        "balanced and enjoyable game experience."
-    ),
-}
-
-
-def chat_with_gpt4_dungeon_master(user_input, game_history, model):
-    try:
-        response = openai.ChatCompletion.create(
-            model=model,  # Dynamically selected model
-            messages=game_history + [{"role": "user", "content": user_input}],
-        )
-        return response.choices[0].message["content"].strip()
-    except openai.error.OpenAIError as e:
-        print(f"An error occurred: {e}")
-        return None
-
-
-# Possible races and classes from AD&D
-races = ["Human", "Elf", "Dwarf", "Halfling", "Gnome", "Half-Elf", "Half-Orc"]
-classes = [
-    "Fighter",
-    "Wizard",
-    "Cleric",
-    "Rogue",
-    "Paladin",
-    "Ranger",
-    "Druid",
-    "Monk",
-    "Bard",
-]
-
-
-def get_character_creation_input(prompt, choices):
-    print(prompt)
-    for idx, choice in enumerate(choices, 1):
-        print(f"{idx}: {choice}")
-    while True:
-        selection = input("Choose an option: ")
-        if selection.isdigit() and 1 <= int(selection) <= len(choices):
-            return choices[int(selection) - 1]
-        print("Invalid choice, please try again.")
-
-
-def dnd_game_loop():
+def main():
     print("Welcome to the GPT Dungeons & Dragons Adventure!")
 
     # AI model selection
-    print("Choose your AI Dungeon Master:")
-    print("1: GPT-4")
-    print("2: GPT-3.5-turbo")
-    model_choice = input("Select an option (1 or 2): ")
-    model = "gpt-4" if model_choice != "2" else "gpt-3.5-turbo"
+    model = DungeonMaster.choose_model()
 
     # Character creation
-    print("\n--- Character Creation ---\n")
-    character_name = input("What is your character's name? ")
+    character = Character.create_character()
 
-    character_race = get_character_creation_input(
-        "Choose your character's race:", races
-    )
-    character_class = get_character_creation_input(
-        "Choose your character's class:", classes
-    )
+    # System message for the AI Dungeon Master with the character context
+    system_message = {
+        "role": "system",
+        "content": (
+            f"You are a knowledgeable and fair Dungeon Master in a game of Advanced Dungeons & Dragons. "
+            f"The player's character is {character.name}, a {character.race} {character.character_class}. "
+            "Provide detailed descriptions, answer the player’s actions with narrative outcomes, manage combat encounters, "
+            "and facilitate dialogue with characters in the world. Simulate dice rolls and maintain the fantasy setting for an engaging game experience."
+        ),
+    }
 
-    print(
-        f"\nWelcome, {character_name} the {character_race} {character_class}! Your adventure awaits!\n"
-    )
+    print(f"\nWelcome, {character}! Your adventure awaits!\n")
     print("Type 'quit' to exit.\n")
 
-    # List of starting scenes
-    starting_scenes = [
-        "You find yourself in a dimly lit tavern. Patrons quietly converse around you. What will you do?",
-        "You wake up in a dark, damp dungeon cell. Your head is throbbing and you can't remember how you got here.",
-        "You stand at the edge of a bustling market, the shouts of vendors and the smell of fresh goods fill the air.",
-        "You are at the gates of a majestic city, guards eye you suspiciously as they patrol the walls.",
-        "You are in a dense forest, the canopy above barely letting any light through. The path forward is unclear.",
-    ]
+    # Initialize game history with the system message
+    game_history = [system_message]
 
-    starting_scene = random.choice(starting_scenes)
-    game_history = [system_message, {"role": "assistant", "content": starting_scene}]
+    # Randomize starting scenario
+    if starting_scenes:
+        starting_scene = random.choice(starting_scenes)
+    else:
+        starting_scene = f"{character.name} finds themselves in a place beyond time and space, seeking a path to adventure."
 
-    # Ensure that the selected model is passed to the chat function
+    # Add the starting scene to the game history
+    game_history.append({"role": "assistant", "content": starting_scene})
+
+    # Main game loop
+    dm = DungeonMaster(model)
     while True:
         print_colored("Dungeon Master: " + game_history[-1]["content"], DM_COLOR)
 
-        player_input = input(PLAYER_COLOR + "You: " + RESET_COLOR)
+        player_input = input(PLAYER_COLOR + f"{character.name}: " + RESET_COLOR)
         if player_input.lower() == "quit":
             print("Farewell, adventurer!")
             break
 
-        dm_response = chat_with_gpt4_dungeon_master(
-            player_input, game_history, model
-        )  # Pass the selected model here
+        dm_response = dm.chat(player_input, game_history, character)
         if dm_response:
             print_colored("Dungeon Master: " + dm_response, DM_COLOR)
             game_history.append({"role": "user", "content": player_input})
             game_history.append({"role": "assistant", "content": dm_response})
 
+            # Truncate history to keep it manageable
             if len(game_history) > 20:
                 game_history = game_history[-20:]
-        # Eleven labs reading (will max out quickly on free tier)
-        # audio = elevenlabs.generate(game_history[-1])
-        # elevenlabs.play(audio)
+
+        # Placeholder for Eleven Labs integration or other audio output features
 
 
 if __name__ == "__main__":
-    dnd_game_loop()
+    main()

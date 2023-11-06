@@ -1,0 +1,3 @@
+# requirements.txt
+openai==0.10.2
+# Any other packages you might need

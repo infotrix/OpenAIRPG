@@ -1,34 +1,33 @@
 # GPT-Driven Dungeons & Dragons Text Adventure
 
-Embark on a text-based RPG adventure where the GPT-4 or GPT-3.5-turbo model from OpenAI takes the role of the Dungeon Master. This command-line experience fuses classic AD&D rules with modern AI capabilities to create a unique and dynamic storytelling adventure.
+Dive into a text-based RPG where the GPT-4 or GPT-3.5-turbo model from OpenAI becomes your Dungeon Master. This terminal game blends the essence of classic Dungeons & Dragons with cutting-edge AI to deliver a personalized storytelling experience.
 
 ## Features
 
-- Engaging text-based RPG gameplay.
-- AI-driven Dungeon Master for dynamic storytelling.
-- Character customization with name, race, and class choices.
-- Randomized starting scenarios for varied gameplay.
-- ANSI color-coded text for immersive player/DM interactions.
-- Player choice of AI model at game start for tailored experiences.
+- Text-based RPG gameplay with an AI Dungeon Master.
+- Customizable characters with name, race, and class options.
+- Unique starting scenarios for each new game.
+- Colored text output for enhanced readability and immersion.
+- Selection between GPT-4 and GPT-3.5-turbo at game start.
+- Simple command-line interface with support for custom player names.
 
 ## Latest Updates
 
-### Version 0.5 (Date: 2023-11-06)
+### Version 0.6 (Date: 2023-11-06)
 
-- Introduced character customization options at the beginning of the game.
-- Added functionality for the player to select the AI model at startup.
-- Implemented ANSI color codes for Dungeon Master and player text.
-- Created a randomized starting scene feature to enhance gameplay variety.
-- Various bug fixes and performance improvements.
+- Refactored codebase for improved readability and maintainability.
+- Integrated player name personalization within AI Dungeon Master responses.
+- Resolved issues with circular imports and incorrect parameter passing.
+- Updated README to reflect new changes and instructions for players.
+- Fixed bugs reported in the previous version related to character creation.
 
-## TODO
+## Upcoming Features
 
-- **Web Accessible Frontend**: Develop a web-based interface to allow easy access from any browser.
-- **Database Integration**: Implement a database system to persistently store player stats, history, adventure logs, and the current world state.
-- **LangChain Integration**: Incorporate LangChain to enhance AI interactions, enabling more complex companion and NPC behaviors.
-- **Whisper Integration**: Utilize OpenAI's Whisper model for accurate voice recognition, allowing voice commands and dictation as input.
-- **DALL-E Integration**: Integrate with DALL-E to dynamically generate images of scenes, NPCs, and monsters to visually accompany the text-based adventure.
-
+- **Interactive Web Interface**: Implementing a web front-end for browser-based access.
+- **Persistent Game State**: Introducing a database to save player progress and game state.
+- **Enhanced AI Interactions**: Integrating LangChain for richer NPC and game world dynamics.
+- **Voice Command Capability**: Adding OpenAI's Whisper for voice-to-text input during gameplay.
+- **Visual Elements**: Planning to use DALL-E for generating images to visually represent game scenes.
 
 ---
 
